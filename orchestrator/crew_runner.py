@@ -13,11 +13,11 @@ from tasks.trend_task import trend_task
 from tasks.sector_task import sector_task
 from tasks.fundamental_task import fundamental_task
 from tasks.portfolio_task import portfolio_task
+
 from tools.ticker_loader import load_nifty500_tickers
 
-
 # -----------------------------
-# Create the Crew
+# Create Crew
 # -----------------------------
 crew = Crew(
     agents=[
@@ -36,46 +36,63 @@ crew = Crew(
         fundamental_task,
         portfolio_task
     ],
-    process="sequential",  # Or "parallel" if tasks are independent
+    process="sequential",
     verbose=True
 )
 
+# -----------------------------
+# Helper to recursively flatten nested values
+# -----------------------------
+def flatten_scalar(value):
+    if isinstance(value, dict):
+        return {k: flatten_scalar(v) for k, v in value.items()}
+    elif isinstance(value, (list, tuple, set)):
+        return ", ".join(map(str, value))
+    else:
+        return value
 
 # -----------------------------
-# Pipeline runner
+# Run pipeline function
 # -----------------------------
-# orchestrator/crew_runner.py
 def run_pipeline(tickers=None, batch_size=50):
     """
-    Run the Crew pipeline in batches.
-    tickers: list of tickers to process
-    batch_size: batch size for Crew kickoff
+    Run Crew pipeline in batches of tickers.
+    Ensures all outputs are fully scalar (no nested lists/dicts) so that
+    UI or DataFrame conversions never fail.
     """
     if tickers is None:
-        # Load tickers from CSV if not provided
-        from tools.ticker_loader import load_nifty500_tickers
+        # Load from universal task if not provided
         tickers = load_nifty500_tickers()
 
     if not tickers:
         return []
 
-    results = []
+    all_results = []
+    total_batches = (len(tickers) + batch_size - 1) // batch_size
 
-    for i in range(0, len(tickers), batch_size):
-        batch = tickers[i:i + batch_size]
-        output = crew.kickoff(inputs={"stocks": batch})
+    for idx in range(0, len(tickers), batch_size):
+        batch = tickers[idx: idx + batch_size]
 
-        if isinstance(output, list):
-            valid_output = [r for r in output if r is not None]
-            results.extend(valid_output)
-        elif output is not None:
-            results.append(output)
+        # Run Crew pipeline for this batch
+        batch_result = crew.kickoff(inputs={"stocks": batch})
 
-    if len(results) > 10:
-        results = results[:10]
+        if batch_result:
+            if isinstance(batch_result, list):
+                for r in batch_result:
+                    if r is not None and isinstance(r, dict):
+                        flattened = {k: flatten_scalar(v) for k, v in r.items()}
+                        all_results.append(flattened)
+            elif isinstance(batch_result, dict):
+                all_results.append({k: flatten_scalar(v) for k, v in batch_result.items()})
+            else:
+                # If batch_result is a scalar/string, just append
+                all_results.append(batch_result)
 
-    return results
+    # Keep only top 10 results if more than 10
+    if len(all_results) > 10:
+        all_results = all_results[:10]
 
+    return all_results
 
 # -----------------------------
 # Optional standalone run
