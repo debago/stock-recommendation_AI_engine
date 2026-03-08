@@ -1,0 +1,12 @@
+crewai
+openai
+langchain
+langchain-openai
+yfinance
+ta
+pandas
+numpy
+python-dotenv
+aiohttp
+streamlit
+plotly

@@ -1,0 +1,51 @@
+nifty500-ai-platform/
+│
+├── main.py                    # Entry point for running system
+├── config/
+│   ├── llm_config.py          # LLM configurations (models, temperature)
+│   ├── env_config.py          # API keys, environment variables
+│   └── pipeline_config.py     # Agent orchestration order, thresholds
+│
+├── agents/                    # All agent definitions
+│   ├── technical_agent.py
+│   ├── trend_agent.py
+│   ├── sector_agent.py
+│   ├── fundamental_agent.py
+│   ├── portfolio_agent.py
+│   └── __init__.py            # Enables import via agents.*
+│
+├── tools/                     # Python tools or APIs used by agents
+│   ├── market_data_tool.py
+│   ├── quant_engine.py
+│   ├── fundamentals_tool.py
+│   ├── sector_analysis_tool.py
+│   └── __init__.py
+│
+├── tasks/                     # Tasks that agents perform
+│   ├── technical_task.py
+│   ├── trend_task.py
+│   ├── sector_task.py
+│   ├── fundamental_task.py
+│   ├── portfolio_task.py
+│   └── __init__.py
+│
+├── orchestrator/              # Orchestration / workflow layer
+│   ├── crew_runner.py         # CrewAI orchestration of tasks
+│   ├── scheduler.py           # Optional: triggers daily / weekly runs
+│   └── __init__.py
+│
+├── data/                      # Cached or historical data
+│   ├── nifty500_list.csv
+│   ├── stock_data/
+│   └── fundamentals/
+│
+├── dashboards/                # Streamlit / Plotly Dash UI
+│   ├── streamlit_app.py
+│   └── plots.py
+│
+├── tests/                     # Unit / integration tests
+│   ├── test_agents.py
+│   ├── test_tools.py
+│   └── test_pipeline.py
+│
+└── requirements.txt

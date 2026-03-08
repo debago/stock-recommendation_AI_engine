@@ -1,0 +1,27 @@
+# Python environment
+venv/
+.venv/
+.venv
+env/
+__pycache__/
+*.pyc
+
+# Sensitive API keys
+.env
+pkg-test.py
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Data folders (optional, if too large)
+data/
+*.csv
+
+# Streamlit cache
+.streamlit/
+
+# Logs
+logs/
+*.log
+
+git_repo.sh

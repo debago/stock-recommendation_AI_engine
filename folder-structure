@@ -1,0 +1,33 @@
+project/
+│
+├── agents/
+│   ├── __init__.py
+│   ├── data_agent.py
+│   ├── tech_agent.py
+│   ├── trend_agent.py
+│   └── portfolio_agent.py
+│
+├── tasks/
+│   ├── __init__.py
+│   ├── data_task.py
+│   ├── tech_task.py
+│   ├── trend_task.py
+│   └── portfolio_task.py
+│
+├── tools/
+│   ├── __init__.py
+│   └── market_tool.py
+│
+├── orchestrator/
+│   ├── __init__.py
+│   └── crew_runner.py
+│
+├── config/
+│   ├── __init__.py
+│   └── llm_config.py
+│
+├── ui/
+│   ├── __init__.py
+│   └── app.py
+│
+└── main.py

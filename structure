@@ -1,0 +1,25 @@
+nifty_swing_ai
+│
+├── main.py
+│
+├── agents
+│   ├── technical_agent.py
+│   ├── trend_agent.py
+│   ├── sector_agent.py
+│   ├── fundamental_agent.py
+│   └── portfolio_agent.py
+│
+├── tools
+│   ├── quant_engine.py
+│   ├── market_data_tool.py
+│   └── fundamentals_tool.py
+│
+├── tasks
+│   ├── technical_task.py
+│   ├── trend_task.py
+│   ├── sector_task.py
+│   ├── fundamental_task.py
+│   └── portfolio_task.py
+│
+└── orchestrator
+    └── crew_runner.py
