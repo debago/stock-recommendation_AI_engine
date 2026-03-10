@@ -37,7 +37,7 @@ def compute_indicators(df):
 
     return {
         "volume_surge": latest["Volume"] > 2 * volume_avg.iloc[-1],
-        "momentum": latest["rsi"] > 60,
+        "momentum": latest["rsi"] > 0,
         "trend": latest["ema20"] > latest["ema50"],
         "atr": safe_float(latest["atr"]),
         "rsi": safe_float(latest["rsi"]),
