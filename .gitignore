@@ -24,6 +24,6 @@ data/
 logs/
 *.log
 
-git_repo.sh
 .vscode
 output*
+.vscode/
